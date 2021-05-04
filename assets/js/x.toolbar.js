@@ -267,6 +267,50 @@ window.XToolbar = [
         }
     },
     "|",
+    {
+        "name": "markdownToggle",
+        "tip": "Markdown开关",
+        "tipPosition": "n",
+        "icon": "<svg t=\"1620130978050\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"2000\" width=\"20\" height=\"20\"><path d=\"M128 128h768a42.666667 42.666667 0 0 1 42.666667 42.666667v682.666666a42.666667 42.666667 0 0 1-42.666667 42.666667H128a42.666667 42.666667 0 0 1-42.666667-42.666667V170.666667a42.666667 42.666667 0 0 1 42.666667-42.666667z m42.666667 85.333333v597.333334h682.666666V213.333333H170.666667z m128 448H213.333333v-298.666666h85.333334l85.333333 85.333333 85.333333-85.333333h85.333334v298.666666h-85.333334v-170.666666l-85.333333 85.333333-85.333333-85.333333v170.666666z m469.333333-128h85.333333l-128 128-128-128h85.333334v-170.666666h85.333333v170.666666z\" p-id=\"2001\"></path></svg>",
+        click() {
+            if (!$("div.message.notice").html()) {
+                let isMarkdown = $('[name=markdown]').val() ? $('[name=markdown]').val() : 0;
+                if (isMarkdown == 1) {
+                    let notice = $(`<div class="message notice">${XConf.i18n.XMarkdown.enabled}
+                    <button class="btn btn-xs no">${XConf.i18n.XMarkdown.disable}</button> 
+                    <button class="btn btn-xs primary yes">${XConf.i18n.XMarkdown.keepEnabled}</button></div>`)
+                        .hide().insertBefore($('#text').parent('p')).slideDown();
+
+                    $('.yes', notice).click(function () {
+                        notice.remove();
+                    });
+
+                    $('.no', notice).click(function () {
+                        notice.remove();
+                        $("[name=markdown]").val(0);
+                    });
+                } else {
+                    let notice = $(`<div class="message notice">${XConf.i18n.XMarkdown.disabled}
+                    <button class="btn btn-xs primary yes">${XConf.i18n.XMarkdown.enable}</button>
+                    <button class="btn btn-xs no">${XConf.i18n.XMarkdown.keepDisabled}</button></div>`)
+                        .hide().insertBefore($('#text').parent('p')).slideDown();
+
+                    $('.yes', notice).click(function () {
+                        notice.remove();
+                        if (!$("[name=markdown]").val())
+                            $('<input type="hidden" name="markdown" value="1" />').appendTo('.submit');
+                        else
+                            $("[name=markdown]").val(1);
+                    });
+
+                    $('.no', notice).click(function () {
+                        notice.remove();
+                    });
+                }
+            }
+
+        }
+    },
     "fullscreen",
     {
         "name": "about",

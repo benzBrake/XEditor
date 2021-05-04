@@ -198,8 +198,6 @@ class XEditor_Util
                     }
                 },
                 'i18n': {
-                    'enable': '<?php _e('启用'); ?>',
-                    'keepDisabled': '<?php _e("保持禁用"); ?>',
                     'ok': '<?php _e("确定"); ?>',
                     'cancel': '<?php _e("取消"); ?>',
                     'toolbar': '<?php _e("工具栏"); ?>',
@@ -211,6 +209,14 @@ class XEditor_Util
                     'XCard': {
                         'title': '<?php _e("卡片标题"); ?>',
                         'content': '<?php _e("卡片内容"); ?>'
+                    },
+                    'XMarkdown': {
+                        'enable': '<?php _e('启用'); ?>',
+                        'disable': '<?php _e('禁用'); ?>',
+                        'keepEnabled': '<?php _e('保持启用'); ?>',
+                        'keepDisabled': '<?php _e("保持禁用"); ?>',
+                        'enabled': '<?php _e('本文Markdown解析已启用！'); ?>',
+                        "disabled": '<?php _e('本文Markdown解析已禁用！'); ?>'
                     }
                 }
             };

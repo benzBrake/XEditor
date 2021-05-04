@@ -376,8 +376,24 @@ class XEditor {
 
     init_editArea() {
         const originText = $('#text');
+        let isMarkdown = $('[name=markdown]').val() ? 1 : 0;
+        if (!isMarkdown) {
+            var notice = $(`<div class="message notice">${XConf.i18n.XMarkdown.disabled}
+            <button class="btn btn-xs primary yes">${XConf.i18n.XMarkdown.enable}</button>
+            <button class="btn btn-xs no">${XConf.i18n.XMarkdown.keepDisabled}</button></div>`)
+                .hide().insertBefore(originText.parent('p')).slideDown();
+
+            $('.yes', notice).click(function () {
+                notice.remove();
+                $('<input type="hidden" name="markdown" value="1" />').appendTo('.submit');
+            });
+
+            $('btn.no', notice).click(function () {
+                notice.remove();
+            });
+        }
         this.xPreview = new XPreview();
-        originText.before('<div id="vditor"></div>');
+        originText.after('<div id="vditor"></div>');
         this.editor = new Vditor('vditor', {
                 "height": document.documentElement.clientHeight * 0.7,
                 "cache": {

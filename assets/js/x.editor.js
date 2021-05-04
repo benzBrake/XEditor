@@ -3,6 +3,7 @@ class XEditor {
         this.init_editArea();
         this.init_advancedPanel();
         this.init_slugTranslate(); // 感谢 BaiduSlug 插件
+        this.init_other();
     }
 
     /**
@@ -467,19 +468,33 @@ class XEditor {
             }, 10000);
         }
     }
+
+    init_other() {
+        let scrollY = window.pageYOffset || document.documentElement.scrollTop,
+            submitArea = $('p.submit'),
+            prevSection = submitArea.prev();
+
+        submitArea.addClass('fixed').css('width', prevSection.outerWidth(true) - 10).css('left', prevSection.offset().left);
+        $('#btn-preview').on('click', function () {
+            $("#edit-secondary").hide();
+            submitArea.removeClass('fixed').css('width', 'unset').css('left', 'unset');
+            $("#vditor").parent('p').hide();
+        });
+        $('#btn-cancel-preview').on('click', function () {
+            $("#edit-secondary").show();
+            $("#vditor").parent('p').show();
+        });
+        $('#btn-submit').addClass('x-btn-success');
+        $(window).scroll(function () {
+            if (submitArea.length > 0) {
+                if (scrollY < (prevSection.offset().top + prevSection.height() - $(window).height())) {
+                    submitArea.addClass('fixed').css('width', prevSection.outerWidth(true) - 10).css('left', prevSection.offset().left);
+                } else {
+                    submitArea.removeClass('fixed').css('width', 'unset').css('left', 'unset');
+                }
+            }
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => new XEditor());
-$('#btn-submit').addClass('x-btn-success');
-$(window).scroll(function () {
-    let scrollY = window.pageYOffset || document.documentElement.scrollTop,
-        submitArea = $('p.submit'),
-        prevSection = submitArea.prev();
-    if (submitArea.length > 0) {
-        if (scrollY < (prevSection.offset().top + prevSection.height() - $(window).height())) {
-            submitArea.addClass('fixed').css('width', prevSection.outerWidth(true) - 10).css('left', prevSection.offset().left);
-        } else {
-            submitArea.removeClass('fixed').css('width', 'unset').css('left', 'unset');
-        }
-    }
-});

@@ -151,7 +151,7 @@ x-photos img:nth-last-child(4) ~ img {
 }
 .shortcode.shortcode-post {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   margin-bottom: 10px;
   padding: 20px;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
@@ -163,11 +163,18 @@ x-photos img:nth-last-child(4) ~ img {
   flex: 1 1 auto;
   margin-right: 1em;
 }
-.shortcode.shortcode-post .media-content {
-  flex: 0 0 25%;
-  position: unset;
+.shortcode.shortcode-post .text-content .content {
+  display: none;
 }
-.shortcode.shortcode-post .media-content img {
+.shortcode.shortcode-post .media-content {
+  max-height: 200px;
+  position: unset;
+  overflow: hidden;
+}
+.shortcode.shortcode-post .media-content a {
+  display: block;
+}
+.shortcode.shortcode-post .media-content a img {
   object-fit: cover;
   width: 100%;
   height: 100%;
@@ -259,9 +266,6 @@ x-photos img:nth-last-child(4) ~ img {
   transition: all 0.2s;
   transform-origin: 0 0;
 }
-.shortcode.shortcode-x-card > .content *:last-child {
-  margin-bottom: 0 !important;
-}
 .shortcode.shortcode-x-card.fold > .title:after {
   transform: rotate(180deg);
 }
@@ -271,6 +275,21 @@ x-photos img:nth-last-child(4) ~ img {
   padding: 0;
 }
 
+@media (min-width: 768px) {
+  .shortcode-post {
+    flex-direction: row !important;
+  }
+  .shortcode-post .text-content .content {
+    display: block !important;
+  }
+  .shortcode-post .text-content .content *:last-child {
+    margin-bottom: 0 !important;
+  }
+  .shortcode-post .media-content {
+    max-height: unset;
+    flex: 0 0 25%;
+  }
+}
 /** 自定义 DOM 样式 */
 x-player, x-bilibili {
   display: block;

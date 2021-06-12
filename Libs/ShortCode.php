@@ -186,6 +186,7 @@ class ShortCode
     public static function excerptEx($text, $archive, $last)
     {
         if ($last) $text = $last;
+        $text = self::handle($text);
         $text = preg_replace('/\[post(.*?)](.*?)\[\/post]/ism', '', $text);
         $text = preg_replace_callback('/\[x-post(.*?)](.*?)\[\/x-post]/ism', function ($matches) {
             $widget = XEditor_Util::widgetById('Contents', $matches[2]);

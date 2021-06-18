@@ -350,6 +350,9 @@ class XEditor {
         return false;
     }
 
+    /**
+     * Slug　翻译初始化
+     */
     init_slugTranslate() {
         const baiduSlug = function () {
             let title = $('#title');
@@ -374,7 +377,6 @@ class XEditor {
         }
     }
 
-
     init_editArea() {
         const originText = $('#text');
         let isMarkdown = $('[name=markdown]').val() ? 1 : 0;
@@ -396,27 +398,31 @@ class XEditor {
         this.xPreview = new XPreview();
         originText.after('<div id="vditor"></div>');
         this.editor = new Vditor('vditor', {
-                "height": document.documentElement.clientHeight * 0.7,
-                "cache": {
-                    "enable": false,
-                    "cid": $('input[name="cid"]').val()
+                height: document.documentElement.clientHeight * 0.7,
+                typewriterMode: true,
+                cache: {
+                    enable: false,
+                    cid: $('input[name="cid"]').val()
                 },
-                "value": originText.val(),
-                "mode": "sv",
-                "preview": {
-                    "mode": "both",
-                    "actions": [],
+                value: originText.text(),
+                mode: 'sv',
+                preview: {
+                    mode: "both",
+                    actions: [],
                     transform(html) {
                         return window.XEditor.xPreview.render(html);
                     }
                 },
-                "toolbar": window.XToolbar,
-                "toolbarConfig": {
-                    "pin": true
+                counter: {
+                    enable: true
                 },
-                "resize": {
-                    "enable": true,
-                    "position": "bottom"
+                toolbar: window.XToolbar,
+                toolbarConfig: {
+                    pin: true
+                },
+                resize: {
+                    enable: true,
+                    position: "bottom"
                 }
             }
         );

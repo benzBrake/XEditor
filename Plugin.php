@@ -49,8 +49,8 @@ class XEditor_Plugin implements Typecho_Plugin_Interface
         $_arr = explode("_", __CLASS__);
         $pluginName = array_shift($_arr);
         ?>
-        <script src="<?php Helper::options()->pluginUrl("${pluginName}/assets/js/config.js") ?>"></script>
-        <link rel="stylesheet" href="<?php Helper::options()->pluginUrl("${pluginName}/assets/css/config.min.css") ?>">
+        <script src="<?php Helper::options()->pluginUrl("$pluginName/assets/js/config.js") ?>"></script>
+        <link rel="stylesheet" href="<?php Helper::options()->pluginUrl("$pluginName/assets/css/config.min.css") ?>">
         <!-- 样式来自 Joe 主题-->
         <div class="x_config">
             <div>
@@ -88,7 +88,7 @@ class XEditor_Plugin implements Typecho_Plugin_Interface
         $edit->setAttribute('class', 'x_content x_basic');
         $form->addInput($edit);
 
-        $edit = new Typecho_Widget_Helper_Form_Element_Text('XAutoSlugBaiduKey', null, null, _t('SLUG 翻译：百度翻译 API KEY'), _t('<a href="http://api.fanyi.baidu.com/api/trans/product/index">获取 API Key</a>'));
+        $edit = new Typecho_Widget_Helper_Form_Element_Text('XAutoSlugBaiduKey', null, null, _t('SLUG 翻译：百度翻译 API KEY'), _t('<a href="https://api.fanyi.baidu.com/api/trans/product/index">获取 API Key</a>'));
         $edit->setAttribute('class', 'x_content x_basic');
         $form->addInput($edit);
 
@@ -127,27 +127,24 @@ class XEditor_Plugin implements Typecho_Plugin_Interface
             },
             $text
         );
-        $text = preg_replace_callback(
+        return preg_replace_callback(
             '/\:\@\(\s*(高兴|小怒|脸红|内伤|装大款|赞一个|害羞|汗|吐血倒地|深思|不高兴|无语|亲亲|口水|尴尬|中指|想一想|哭泣|便便|献花|皱眉|傻笑|狂汗|吐|喷水|看不见|鼓掌|阴暗|长草|献黄瓜|邪恶|期待|得意|吐舌|喷血|无所谓|观察|暗地观察|肿包|中枪|大囧|呲牙|抠鼻|不说话|咽气|欢呼|锁眉|蜡烛|坐等|击掌|惊喜|喜极而泣|抽烟|不出所料|愤怒|无奈|黑线|投降|看热闹|扇耳光|小眼睛|中刀)\s*\)/is',
             function ($match) {
                 return '<img class="owo" src="' . Helper::options()->pluginUrl . '/XEditor/assets/images/owo/aru/' . str_replace('%', '', urlencode($match[1])) . '_2x.png" alt="表情"/>';
             },
             $text
         );
-        return $text;
     }
 
     public static function contentEx($text, $archive, $last)
     {
         if ($last) $text = $last;
-        $text = XEditor_Plugin::parseEmoji($text);
-        return $text;
+        return XEditor_Plugin::parseEmoji($text);
     }
 
     public static function excerptEx($text, $archive, $last)
     {
         if ($last) $text = $last;
-        $text = XEditor_Plugin::parseEmoji($text);
-        return $text;
+        return XEditor_Plugin::parseEmoji($text);
     }
 }

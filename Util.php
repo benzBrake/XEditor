@@ -117,7 +117,8 @@ class XEditor_Util
     public static function archiveFooter()
     {
         if (self::xPlugin('XShortCodeProcess', 1)) { ?>
-            <link rel="stylesheet" href="<?php echo Typecho_Common::url('XEditor/assets/css/x.theme.min.css', Helper::options()->pluginUrl); ?>">
+            <link rel="stylesheet"
+                  href="<?php echo Typecho_Common::url('XEditor/assets/css/x.theme.min.css', Helper::options()->pluginUrl); ?>">
             <script>
                 XConf = {
                     'options': {
@@ -175,7 +176,8 @@ class XEditor_Util
         $options = Helper::options();
         ?>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="<?php echo XEditor_Util::pluginUrl('/assets/css/x.theme.min.css?v=202104250955'); ?>">
+        <link rel="stylesheet"
+              href="<?php echo XEditor_Util::pluginUrl('/assets/css/x.theme.min.css?v=202104250955'); ?>">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor@3.8.4/dist/index.css"/>
         <script>
             window.XConf = {
@@ -413,17 +415,8 @@ class XEditor_Util
 
         // 转换
         if ($parse && (!empty($template))) {
-            if ($options->xmp_cdn_domain !== null && $options->xmp_cdn_domain !== "") {
-                for ($i = 0; $i < count($thumbs); $i++) {
-                    // CDN
-                    if (strpos($thumbs[$i], rtrim($options->siteUrl, '/')) !== false) {
-                        $thumbs[$i] = sprintf($template, str_replace(rtrim($options->siteUrl, '/'), rtrim($options->xmp_cdn_domain, '/'), $thumbs[$i]));
-                    }
-                }
-            } else {
-                for ($i = 0; $i < count($thumbs); $i++) {
-                    $thumbs[$i] = str_replace("%s", $thumbs[$i], $template);
-                }
+            for ($i = 0; $i < count($thumbs); $i++) {
+                $thumbs[$i] = str_replace("%s", $thumbs[$i], $template);
             }
         }
 

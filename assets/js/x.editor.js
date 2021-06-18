@@ -500,6 +500,13 @@ class XEditor {
                 }
             }
         });
+        $(window).resizeEnd(function (event) {
+            if (submitArea.length > 0) {
+                if (scrollY < (prevSection.offset().top + prevSection.height() - $(window).height())) {
+                    submitArea.addClass('fixed').css('width', prevSection.outerWidth(true) - 10).css('left', prevSection.offset().left);
+                }
+            }
+        });
     }
 }
 

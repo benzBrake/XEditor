@@ -224,6 +224,7 @@ class XEditor_Util
             };
         </script>
         <script src="https://cdn.jsdelivr.net/npm/vditor@3.8.4/dist/index.min.js"></script>
+        <script src="<?php echo XEditor_Util::pluginUrl('/assets/js/jquery-resizeEnd.min.js'); ?>"></script>
         <script src="<?php echo XEditor_Util::pluginUrl('/assets/js/x.preview.min.js?v=202104271604'); ?>"></script>
         <script src="<?php echo XEditor_Util::pluginUrl('/assets/js/x.toolbar.min.js?v=202104271604'); ?>"></script>
         <script src="<?php echo XEditor_Util::pluginUrl('/assets/js/x.editor.min.js?v=202104271604'); ?>"></script>

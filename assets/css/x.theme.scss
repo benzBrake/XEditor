@@ -34,6 +34,12 @@ img.owo {
         }
       }
     }
+
+    photos {
+      img {
+        max-height: 100px;
+      }
+    }
   }
 }
 

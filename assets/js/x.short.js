@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.customElements.define('x-photos', xPhotos);
+    window.customElements.define('photos', xPhotos);
 
     class xPost extends HTMLElement {
         constructor() {

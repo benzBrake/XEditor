@@ -26,6 +26,9 @@ img.owo {
   height: 100%;
   width: 100%;
 }
+.vditor-preview .vditor-reset photos img {
+  max-height: 100px;
+}
 
 p.submit.fixed {
   position: fixed;

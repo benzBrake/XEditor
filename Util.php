@@ -167,7 +167,7 @@ class XEditor_Util
     public static function addFooter()
     {
         ?>
-        <link rel="stylesheet" href="<?php Helper::options()->pluginUrl("XEditor/assets/css/config.min.css") ?>">
+        <link rel="stylesheet" href="<?php Helper::options()->pluginUrl("XEditor/assets/css/config.min.css"); ?>">
     <?php }
 
     public
@@ -175,7 +175,7 @@ class XEditor_Util
     {
         $options = Helper::options();
         ?>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="<?php echo XEditor_Util::pluginUrl('/assets/css/font-awesome.min.css?v=4.7'); ?>">
         <link rel="stylesheet"
               href="<?php echo XEditor_Util::pluginUrl('/assets/css/x.theme.min.css?v=202104250955'); ?>">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor@3.8.4/dist/index.css"/>

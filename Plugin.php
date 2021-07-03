@@ -80,6 +80,11 @@ class XEditor_Plugin implements Typecho_Plugin_Interface
         $edit->setAttribute('class', 'x_content x_basic');
         $form->addInput($edit);
 
+        $edit = new Typecho_Widget_Helper_Form_Element_Select('XInsertALlImages', array('on' => _t('开启（默认）'), 'off' => _t('关闭')), 'on', _t('图片一键插入全部'), _t('说明：开启后可以在附件列表中一键插入所有图片'));
+        $edit->setAttribute('class', 'x_content x_basic');
+        $form->addInput($edit);
+
+
         $edit = new Typecho_Widget_Helper_Form_Element_Select('XAutoSlugType', array('pinyin' => _t('拼音（默认）'), 'baidu' => _t('百度翻译'), 'none' => _t("关闭")), 'pinyin', _t('SLUG 翻译模式'), _t('说明：英文翻译需要 配置 API KEY'));
         $edit->setAttribute('class', 'x_content x_basic');
         $form->addInput($edit);

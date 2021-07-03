@@ -94,7 +94,7 @@ class XEditor_Util
 
                         $result = $db->fetchAll($select);
                         if ($user->pass('administrator', true) || $result) {
-                            return '<div class="shortcode shortcode-hide show"' . $attr . '>' . $text . '</div>';
+                            return '<div class="shortcode shortcode-hide show" ' . $attr . '>' . $text . '</div>';
                         } else {
                             return '<div class="shortcode shortcode-hide hidden">此处内容已隐藏，<a href="#comments">回复后(需要填写邮箱)</a>可见</div>';
                         }
@@ -193,6 +193,7 @@ class XEditor_Util
                     'XDefaultCover': '<?php $options->pluginUrl('/XEditor/assets/images/thumbs/' . mt_rand(1, 42) . '.jpg'); ?>',
                     'XUploadApi': '<?php Helper::security()->getToken('/action/upload'); ?>',
                     'XPlayerUrl': '<?php $options->pluginUrl("XEditor/Libs/Player.php?url=") ?>',
+                    'XInsertALlImages': '<?php echo XEditor_Util::xPlugin('XInsertALlImages', 'on') === 'on' ? 'true' : 'false'; ?>',
                     'XActions': {
                         'query': {
                             'post': '<?php $options->index('/action/editor?query-post'); ?>'
@@ -219,7 +220,8 @@ class XEditor_Util
                         'keepDisabled': '<?php _e("保持禁用"); ?>',
                         'enabled': '<?php _e('本文Markdown解析已启用！'); ?>',
                         "disabled": '<?php _e('本文Markdown解析已禁用！'); ?>'
-                    }
+                    },
+                    'InsertAllImages': '<?php _e("插入所有图片附件"); ?>'
                 }
             };
         </script>

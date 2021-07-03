@@ -1,23 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-    class xPhotos extends HTMLElement {
-        constructor() {
-            super();
-            let _this = this;
-
-            [].forEach.call(this.querySelectorAll("img"), function (element) {
-                let div = document.createElement('div');
-                div.classList.add('photo');
-                div.appendChild(element);
-                _this.appendChild(div);
-            });
-            [].forEach.call(this.querySelectorAll("br"), function (element) {
-                element.remove();
-            });
-        }
-    }
-
-    window.customElements.define('photos', xPhotos);
-
     class xPost extends HTMLElement {
         constructor() {
             super();

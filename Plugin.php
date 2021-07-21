@@ -5,7 +5,7 @@
  *
  * @package XEditor
  * @author Ryan
- * @version 1.1.2
+ * @version 1.1.3
  * @dependence 14.10.10-*
  * @link https://doufu.ru
  *

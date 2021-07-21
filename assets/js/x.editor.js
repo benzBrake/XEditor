@@ -474,16 +474,18 @@ class XEditor {
         if (XConf.options.XInsertALlImages && $('#ph-insert-images').length === 0) {
             $('#upload-panel').append('<span id="ph-insert-images" class="x-btn x-btn-success full-line">' + XConf.i18n.insertAllImages + '</span>');
             $('#ph-insert-images').on('click', function () {
-                var text = "";
-                var fileList = $('li', $('#file-list'));
-                for (let times = 0; times < fileList.length; times++) {
-                    var link = fileList.eq(times).data('url');
-                    var isImage = fileList.eq(times).data('image');
-                    var cid = fileList.eq(times).data('cid');
-                    var name = $('a.insert', fileList.eq(times)).eq(0).text();
-                    if (isImage == 1)
-                        text = text + "\n" + '![' + name + '](' + link + ')';
-                }
+                let fileList = $('#file-list').children('li'),
+                    text = "";
+                fileList.each((num, el) => {
+                    let item = $(el);
+                    if (item.data('image')) {
+                        text += "\n" + `![${item.find('.insert').text()}](${item.data('url')})`;
+                    }
+                });
+                // 歪路修复神奇的 Vditor BUG
+                $("#ph-insert-images").on('DOMSubtreeModified', () => {
+                    $("#ph-insert-images").html(XConf.i18n.insertAllImages);
+                });
                 window.XEditor.replaceSelection(text);
             });
         }

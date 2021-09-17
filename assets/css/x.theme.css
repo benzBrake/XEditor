@@ -177,7 +177,7 @@ x-photos img:nth-last-child(4) ~ img {
 .shortcode.shortcode-post .media-content a {
   display: block;
 }
-.shortcode.shortcode-post .media-content a img {
+.shortcode.shortcode-post .media-content img {
   object-fit: cover;
   width: 100%;
   height: 100%;

@@ -7,7 +7,7 @@ class XEditor_Util
      * @return string
      * @throws Typecho_Plugin_Exception
      */
-    public static function activate()
+    public static function activate(): string
     {
         if (false == Typecho_Http_Client::get()) {
             throw new Typecho_Plugin_Exception(_t('对不起, 您的主机不支持 php-curl 扩展而且没有打开 allow_url_fopen 功能, 无法正常使用此功能'));
@@ -144,6 +144,7 @@ class XEditor_Util
      * 增加撰写文章选项
      * @param $post
      * @throws Typecho_Exception
+     * @throws ReflectionException
      */
     public static function addPostOption($post)
     {
@@ -151,7 +152,9 @@ class XEditor_Util
             // 标签选择器
             echo '<div id="tags-selector" style="min-height: 32px;max-height: 15em;overflow: auto;border: 1px solid #d9d9d6; background-color: #FFF;">';
             echo '<div class="auto-insert x-btn x-btn-success full-line" onclick="window.XEditor._autoInsertTag();">' . _t("自动插入标签") . '</div>';
-            $stack = Typecho_Widget::widget('Widget_Metas_Tag_Cloud')->stack;
+            /* @var Widget_Metas_Tag_Cloud $tags */
+            Typecho_Widget::widget('Widget_Metas_Tag_Cloud')->to($tags);
+            $stack = self::reflectGetValue($tags, 'stack');
             $i = 0;
             while (isset($stack[$i])) {
                 echo '<span data-tag="', $stack[$i]['name'], '">', $stack[$i]['name'], '</span>';
@@ -290,6 +293,8 @@ class XEditor_Util
      */
     public static function widgetById($table, $pkId)
     {
+        if (class_exists('\Utils\Helper'))
+            return \Utils\Helper::widgetById($table, $pkId);
         $table = ucfirst($table);
         if (!in_array($table, array('Contents', 'Comments', 'Metas', 'Users'))) {
             return NULL;
@@ -397,7 +402,7 @@ class XEditor_Util
         }
 
         // 接着是附件匹配
-        $attachments = null;
+        /* @var $attachments */
         Typecho_Widget::widget('Widget_Contents_Attachment_Related@content-' . $archive->cid, 'parentId=' . $archive->cid)->to($attachments);
         while ($attachments->next()) {
             if ($quantity <= 0) {
@@ -435,5 +440,16 @@ class XEditor_Util
             }
             return true;
         }
+    }
+
+    /**
+     * @throws ReflectionException
+     */
+    public static function reflectGetValue($object, $name)
+    {
+        $reflect = new ReflectionClass($object);
+        $property = $reflect->getProperty($name);
+        $property->setAccessible(true);
+        return $property->getValue($object);
     }
 }

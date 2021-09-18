@@ -212,7 +212,7 @@ class XEditor_Action extends XEditor_Helper_Action_Admin
      */
     public function queryPost($cid)
     {
-        $widget = XEditor_Util::widgetById('contents', $cid);
+        $widget = Helper::widgetById('contents', $cid);
         $this->throwMsg(array('title' => $widget->title, 'permalink' => $widget->permalink, 'content' => XEditor_Util::subStr($widget->content), 'thumb' => XEditor_Util::xThumbs($widget, 1, true)));
     }
 

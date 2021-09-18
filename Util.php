@@ -99,7 +99,7 @@ class XEditor_Util
                             return '<div class="shortcode shortcode-hide hidden">此处内容已隐藏，<a href="#comments">回复后(需要填写邮箱)</a>可见</div>';
                         }
                     case 'post':
-                        $widget = XEditor_Util::widgetById('contents', $text);
+                        $widget = Helper::widgetById('contents', $text);
                         $abstract = XEditor_Util::subStr($widget->excerpt, 120);
                         $thumb = XEditor_Util::xThumbs($widget, 1, true);
                         $template = '<div class="shortcode shortcode-post"><div class="text-content"><div class="title"><a href="{permalink}">{title}</a></div><div class="content">' . $abstract . '</div></div><div class="media-content"><a href="{permalink}" title="{title}"><img alt="{title}" src="' . $thumb . '"/></a></div></div>';
@@ -282,42 +282,6 @@ class XEditor_Util
     public static function pluginUrl($uri = "")
     {
         return Typecho_Common::url($uri, Helper::options()->pluginUrl . '/XEditor');
-    }
-
-    /**
-     * 根据ID获取单个Widget对象
-     *
-     * @param string $table 表名, 支持 contents, comments, metas, users
-     * @param int $pkId 列ID, 必须是存在的 ID
-     * @return Widget_Abstract
-     */
-    public static function widgetById($table, $pkId)
-    {
-        if (class_exists('\Utils\Helper'))
-            return \Utils\Helper::widgetById($table, $pkId);
-        $table = ucfirst($table);
-        if (!in_array($table, array('Contents', 'Comments', 'Metas', 'Users'))) {
-            return NULL;
-        }
-
-        $keys = array(
-            'Contents' => 'cid',
-            'Comments' => 'coid',
-            'Metas' => 'mid',
-            'Users' => 'uid'
-        );
-
-        $className = "Widget_Abstract_{$table}";
-        $key = $keys[$table];
-        $db = Typecho_Db::get();
-        $widget = new $className(Typecho_Request::getInstance(), Typecho_Widget_Helper_Empty::getInstance(), null);
-
-        $db->fetchRow(
-            $widget->select()->where("{$key} = ?", $pkId)->limit(1),
-            array($widget, 'push')
-        );
-
-        return $widget;
     }
 
     /**

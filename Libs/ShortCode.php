@@ -189,7 +189,7 @@ class ShortCode
         $text = self::handle($text);
         $text = preg_replace('/\[post(.*?)](.*?)\[\/post]/ism', '', $text);
         $text = preg_replace_callback('/\[x-post(.*?)](.*?)\[\/x-post]/ism', function ($matches) {
-            $widget = XEditor_Util::widgetById('Contents', $matches[2]);
+            $widget = Helper::widgetById('Contents', $matches[2]);
             return _t("参考文章《%s》", $widget->title);
         }, $text);
         return preg_replace('/\[hide](.*?)\[\/hide]/ism', '', $text);

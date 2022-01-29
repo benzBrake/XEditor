@@ -1,0 +1,324 @@
+:root {
+  scroll-behavior: smooth;
+}
+
+.col-mb-12 {
+  clear: both;
+}
+
+.col-mb-12.col-tb-8.col-tb-offset-2 {
+  margin-left: 0;
+  width: 100%;
+  float: none;
+}
+
+* {
+  margin: 0;
+  margin-bottom: 0px;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+[role="form"] > form {
+  display: none;
+}
+
+.x-config {
+  display: block;
+  transition: height .2s;
+}
+
+.x-warning {
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+  color: #842029;
+  display: block;
+  margin-top: 15px;
+  padding: 10px;
+  width: calc(100% - 10px);
+  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px -5px rgba(158,158,158,.22);
+}
+
+.x-sticky {
+  position: sticky;
+  float: left;
+  top: 20px;
+  width: 200px;
+  background: #fff;
+  padding: 15px;
+  box-shadow: 0px 0px 20px -5px rgba(158, 158, 158, 0.22);
+  border-radius: 8px;
+  transition: all .146s;
+
+
+  .x-tabs {
+    list-style: none;
+    padding: 0;
+
+    > li.item {
+      text-align: center;
+      height: 40px;
+      line-height: 40px;
+      color: #606266;
+      cursor: pointer;
+      transition: all 0.146s;
+      user-select: none;
+
+      &.active {
+        background: #ecf5ff;
+      }
+    }
+  }
+
+  .x-backup {
+    span {
+      display: block;
+      padding: 10px;
+      margin-top: 15px;
+      cursor: pointer;
+      text-align: center;
+
+      &.backup {
+        color: #084298;
+        background-color: #cfe2ff;
+        border-color: #b6d4fe;
+      }
+
+      &.restore {
+        color: #664d03;
+        background-color: #fff3cd;
+        border-color: #ffecb5;
+      }
+
+      &.delete {
+        color: #842029;
+        background-color: #f8d7da;
+        border-color: #f5c2c7;
+      }
+    }
+  }
+}
+
+.x-logo {
+  color: #303133;
+  font-weight: 500;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ebeef5;
+  padding-bottom: 15px;
+}
+
+
+.x-content {
+  padding: 0 10px;
+  min-height: 100px;
+  margin-left: 200px;
+  transition: margin .146s;
+
+  > form {
+    width: 100%;
+    overflow: hidden;
+
+    > ul {
+      list-style: none;
+      background: #fff;
+      box-shadow: 0px 0px 20px -5px rgba(158, 158, 158, 0.22);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 15px;
+
+      &.typecho-option-submit {
+        display: block !important;
+      }
+
+      &.x-notice {
+        height: 100%;
+
+        .title {
+          display: flex;
+          justify-content: center;
+          padding: 20px;
+
+          .latest {
+            display: none;
+            margin-right: 10px;
+
+            &.active {
+              display: block;
+
+              &.found {
+                color: red;
+
+                & + .version {
+                  color: red;
+                }
+              }
+            }
+          }
+        }
+
+        .message {
+          padding: 20px;
+          line-height: 28px;
+          color: #606266;
+
+          ol, ul {
+            padding: 0 40px;
+            margin-bottom: 15px;
+          }
+        }
+      }
+
+      &.x-select-image {
+        > li {
+          display: flex;
+          flex-wrap: wrap;
+
+          > label {
+            flex: 0 0 100%;
+          }
+
+          > span {
+            width: 25%;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+
+            input[type="radio"] {
+              display: none;
+
+              + label {
+                position: relative;
+                display: inline-block;
+                padding: 5px;
+                height: 80px;
+                width: 100%;
+
+                &:hover {
+                  cursor: pointer;
+                }
+
+                &:before {
+                  background-color: rgba(0, 0, 0, .3);
+                  content: "√";
+                  left: 5px;
+                  right: 5px;
+                  top: 5px;
+                  bottom: 5px;
+                  position: absolute;
+                  color: #fff;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  font-weight: bold;
+                  font-size: 20px;
+                  opacity: 0;
+                  transition: opacity .146s;
+                }
+              }
+
+              &:checked + label:before {
+                opacity: 1;
+              }
+            }
+          }
+        }
+
+
+      }
+
+      &:not(.active) {
+        display: none;
+      }
+
+      &.active {
+        display: block !important;
+      }
+
+      > li {
+        border: 1px solid #e9e9eb;
+        padding: 15px;
+
+        > {
+          label {
+            display: block;
+            line-height: 40px;
+            background: #ecf5ff;
+            margin-bottom: 15px;
+            padding: 0 15px;
+            color: #409eff;
+            user-select: none;
+          }
+
+          input {
+            width: 100%;
+            outline: none;
+            padding: 10px;
+            color: #666;
+            border: 1px solid #e9e9eb;
+            -webkit-appearance: none;
+          }
+
+          textarea {
+            width: 100%;
+            outline: none;
+            padding: 10px;
+            color: #666;
+            border: 1px solid #e9e9eb;
+            -webkit-appearance: none;
+            min-height: 120px;
+          }
+
+          span.multiline {
+            display: block;
+          }
+
+          p {
+            background: #f8f8f8;
+            color: #999;
+            padding: 10px;
+            margin-top: 15px;
+            line-height: 24px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767.97px) {
+  .x-config {
+    flex-wrap: wrap;
+  }
+
+  .x-sticky {
+    width: 100%;
+    margin-bottom: 15px;
+    float: none;
+    position: static;
+  }
+
+  .x-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #ebeef5;
+    padding-bottom: 10px;
+
+    > li {
+      width: 33.33333333%;
+    }
+  }
+
+  .x-content {
+    margin-left: 0;
+    padding: 0;
+  }
+}

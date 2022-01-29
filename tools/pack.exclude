@@ -1,0 +1,17 @@
+.idea\*
+.idea
+.git\*
+.git
+.gitignore
+LICENSE
+package.json
+package-lock.json
+node_modules\*
+node_modules
+pack
+pack\*
+tools\*
+tools
+functions_diy.php
+cache
+cache\*

@@ -1,99 +1,81 @@
-# XEditor
-
-一款基于 Vditor 开发的 Typecho 编辑器插件
+# AAEditor
 
 ## 功能自定义
 
 ### 自定义按钮
 
-修改 'assets/js/toolbar.js'，以插入按钮这个自带功能说明。
+修改 'assets/json/editor.json'，以插入按钮这个自带功能说明。
 > `name`是按钮标记
 >
-> `tip`是按钮说明
->
-> `tipPosition`是提示位置，具体定义参照 Vditor 官方文档，
+> `insertBefore`是指在那个 DOM 前边插入可写 #id .class
 >
 > `icon`是图标，建议使用SVG，可以上 https://iconfont.cn 找图标
-> `preview`是预览替换内容，这个功能是给短代码用的，主要是实时预览时自动替换短代码为 `preview`的模板，`$3`是短代码属性，`$5`是短代码内容，具体可以看 https://regex101.com/delete/y5VK1D5l5VF84bP70okI3dcN
+> 
+> `template` 填入编辑器的模板
+>
+> `preview`是预览替换内容，这个功能是给短代码用的，主要是实时预览时自动替换短代码为`preview`的模板，`$3`是短代码属性，`$5`是短代码内容，具体可以看 https://regex101.com/r/ja0b1p/1
 >
 > `previewArea` 是弹窗按钮用的，修改参数后实时是否实时预览，值`c`时预览框内容居中，为`n`时不显示，其余值都显示
 >
+> `replacement` 是 PHP 前台文章渲染处理的正则替换表达式，和`preview`一样
+>
 > `params`是弹出对话框的参数
 >
-> `click()`是按钮点击后的响应函数
+> `onclick`是点击响应方法
 
 ```
-    {
-        "name": "x-btn",
-        "tip": "插入按钮",
-        "tipPosition": "n",
-        "icon": "<svg viewBox=\"0 0 1024 1024\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\"><path d=\"M856.73 796.7h-690c-57.9 0-105-47.1-105-105v-360c0-57.9 47.1-105 105-105h690c57.9 0 105 47.1 105 105v360c0 57.89-47.1 105-105 105zm-690-500.01c-19.3 0-35 15.7-35 35v360c0 19.3 15.7 35 35 35h690c19.3 0 35-15.7 35-35v-360c0-19.3-15.7-35-35-35h-690z\"/><path d=\"M233.16 431.69H790.3v160H233.16z\"/></svg>",
-        "template": "[x-btn type='{type}' icon='{icon}' href='{href}' content='{content}' /]\n",
-        "preview": "<x-btn$3>$5</x-btn>",
-        "previewArea": "c",
-        "params":
-            {
-                "type": {
-                    "label": "按钮类型",
-                    "tag": 'select',
-                    "options": {
-                        "primary": "primary",
-                        "secondary": "secondary",
-                        "light": "light",
-                        "dark": "dark",
-                        "info": "info",
-                        "success": "success",
-                        "warning": "warning",
-                    }
-                },
-                "icon": {
-                    "label": "<a href='https://fontawesome.dashgame.com/' target='_blank' title='点此查找图标Class'>按钮图标</a>",
-                },
-                "href": {
-                    "label": "按钮链接",
-                    "required": true
-                }
-                ,
-                "content": {
-                    "label": "按钮文字",
-                    "default": "按钮",
+    "x-btn": {
+        "name": "插入按钮",
+        "insertBefore": "#wmd-spacer5",
+        "template": "[x-btn type=\"{type}\" icon=\"{icon}\" href=\"{href}\" content=\"{content}\" /]\n",
+        "preview": "<div class=\"shortcode shortcode-btn\"$3><p>按钮</p></div>",
+        "replacement": "<x-btn$3>$5</x-btn>",
+        "params": {
+            "type": {
+                "label": "按钮类型",
+                "tag": "select",
+                "options": {
+                    "primary": "primary",
+                    "secondary": "secondary",
+                    "light": "light",
+                    "dark": "dark",
+                    "info": "info",
+                    "success": "success",
+                    "warning": "warning"
                 }
             },
-        click() {
-            window.XEditor.paramsPrompt('x-btn');
-        }
-    },
+            "icon": {
+                "label": "<a href='https://fontawesome.dashgame.com/' target='_blank' title='点此查找图标Class'>按钮图标</a>"
+            },
+            "href": {
+                "label": "按钮链接",
+                "required": true
+            },
+            "content": {
+                "label": "按钮文字",
+                "default": "按钮"
+            }
+        },
+        "icon": "<svg viewBox=\"0 0 1024 1024\" xmlns=\"http://www.w3.org/2000/svg\" width=\"22\" height=\"22\"><path d=\"M856.73 796.7h-690c-57.9 0-105-47.1-105-105v-360c0-57.9 47.1-105 105-105h690c57.9 0 105 47.1 105 105v360c0 57.89-47.1 105-105 105zm-690-500.01c-19.3 0-35 15.7-35 35v360c0 19.3 15.7 35 35 35h690c19.3 0 35-15.7 35-35v-360c0-19.3-15.7-35-35-35h-690z\"/><path d=\"M233.16 431.69H790.3v160H233.16z\"/></svg>"
+    }
 ```
 
 ### 自定义短代码渲染
 
-修改 `assets/js/x.short.js`
+修改 `assets/src/short.js`
 
-### 新增前台短代码处理
-
-这个不需要会正则，只需 修改 `assets/js/replacement.json`， 格式为：
-
+## 编译JS
+1.需要 nodejs 环境
+2.在插件目录运行 CMD
 ```
-{
-    "短代码 Tag": "替换内容"
-}
+npm install # 安装依赖
+npm run prod # 编译
+```
+3.如果需要实时编译
+```
+npm run watch
 ```
 
-替换内容有4个参数，
-
-> `{code}` 正则匹配结果
->
-> `{attr}` 短代码属性
->
-> `{text}` 短代码内容
->
-> `{name}` 短代码名称
-
-## 感谢
-
-感谢 [Vditor](https://github.com/Vanessa219/vditor )，本插件基于 Vditor 构建
-
-感谢 [Joe](https://github.com/HaoOuBa/Joe ) ，本插件大量使用 Joe 主题的各种图标
 
 ## 授权
 

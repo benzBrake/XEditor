@@ -2,3 +2,4 @@
 pack.cmd
 pack/*
 /pack.cmd
+/node_modules

@@ -1,5 +1,5 @@
 <?php
-
+namespace TypechoPlugin\AAEditor\Libs;
 /**
  * 汉字转拼音
  *
@@ -9,7 +9,7 @@
  * @link http://blog.tapasy.com/baiduslug.html
  * @license GNU General Public License 2.0
  */
-class XEditor_Libs_Pinyin
+class Pinyin
 {
     /** 拼音字典 */
     private $_dict;
@@ -540,7 +540,7 @@ class XEditor_Libs_Pinyin
      * @param string $word
      * @return string
      */
-    public function stringToPinyin($word)
+    public function stringToPinyin(string $word): string
     {
         $word = preg_replace('/\s/is', '_', $word);
         $pinyin = '';
@@ -569,11 +569,11 @@ class XEditor_Libs_Pinyin
      * @param string $asc ASCII 编码的字符
      * @return string
      */
-    public function ascToPinyin($asc)
+    public function ascToPinyin(string $asc): string
     {
         $dict = $this->_dict;
         foreach ($dict as $value) {
-            if (array_search($asc, $value) === false) {
+            if (!in_array($asc, $value)) {
             } else {
                 return key($dict);
             }

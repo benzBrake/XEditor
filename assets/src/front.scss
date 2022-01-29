@@ -1,0 +1,148 @@
+img.owo {
+  width: 32px;
+  height: 32px;
+}
+
+/** 相册排列通用样式 */
+photos,
+x-photos {
+  padding: 2px;
+  display: flex;
+  flex-wrap: wrap;
+
+  &:after {
+    content: '';
+    flex-grow: 999999999;
+    min-width: 200px;
+    height: 0;
+  }
+
+  br {
+    display: none;
+  }
+
+  .photo {
+    margin: 2px;
+    height: 200px;
+    flex-grow: 1;
+    display: flex;
+    position: relative;
+    width: unset;
+    justify-content: center;
+
+    img {
+      height: 100px;
+      width: calc(100% - 4px);
+      display: block;
+      object-fit: cover;
+      margin: 2px;
+    }
+  }
+
+  img {
+    height: 200px;
+    flex-grow: 1;
+    margin: 2px;
+    display: block;
+    object-fit: cover;
+  }
+}
+
+.shortcode {
+  display: flex;
+  margin: 5px 0;
+
+  &-post {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+    .text-content {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      justify-content: start;
+
+      .title {
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        overflow: hidden;
+        font-size: 1.125rem !important;
+
+        a {
+          color: #222831;
+          font-weight: 500;
+        }
+      }
+
+      .content {
+        display: none;
+      }
+    }
+
+    .media-content {
+      padding-left: 1rem;
+      padding-right: 0;
+      flex: 0 0 auto;
+      width: 25%;
+      position: relative;
+
+      &:after {
+        content: "";
+        display: block;
+        padding-top: 100%;
+      }
+
+      a {
+        background-color: rgba(120, 120, 120, .1);
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border: 0;
+        border-radius: inherit;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      img {
+        display: block;
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
+        top: 0;
+        right: 0;
+      }
+    }
+
+    &-hide {
+      padding: 10px;
+      background: repeating-linear-gradient(145deg, #f2f2f2, #f2f2f2 15px, #fff 0, #fff 30px);
+
+      &.show {
+        background: #eee;
+      }
+
+      br:first-child {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .shortcode {
+    &-post {
+      .text-content {
+        display: block;
+      }
+    }
+  }
+}
+
+@import "custom";

@@ -119,18 +119,18 @@ x-photos {
         right: 0;
       }
     }
+  }
 
-    &-hide {
-      padding: 10px;
-      background: repeating-linear-gradient(145deg, #f2f2f2, #f2f2f2 15px, #fff 0, #fff 30px);
+  &-hide {
+    padding: 10px;
+    background: repeating-linear-gradient(145deg, #f2f2f2, #f2f2f2 15px, #fff 0, #fff 30px);
 
-      &.show {
-        background: #eee;
-      }
+    &.show {
+      background: #eee;
+    }
 
-      br:first-child {
-        display: none;
-      }
+    br:first-child {
+      display: none;
     }
   }
 }

@@ -9,11 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 content: this.getAttribute('content') || '标签按钮'
             };
             this.outerHTML = `
-				<div class="shortcode shortcode-x-btn">
-				    <a class="x-btn x-btn-${this.options.type}" href="${this.options.href === "" || this.options.href === "{href}" ? "https://doufu.ru" : this.options.href}" target="_blank" rel="noopener noreferrer nofollow">
+				    <a class="shortcode-btn shortcode-btn-${this.options.type} x-btn x-btn-${this.options.type}" href="${this.options.href === "" || this.options.href === "{href}" ? "https://doufu.ru" : this.options.href}" target="_blank" rel="noopener noreferrer nofollow">
 					    <span class="icon"><i class="fa ${(this.options.icon === "" || this.options.icon === "{icon}") ? "fa-link" : this.options.icon}"></i></span><span class="content">${(this.options.content === "" || this.options.content === "{content}") ? XConf.i18n.button : this.options.content}</span>
 				    </a>
-				</div>
 			`;
         }
     }
@@ -38,4 +36,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.customElements.define('x-player', xPlayer);
+
+    class xCard extends HTMLElement {
+        constructor() {
+            super();
+            this.options = {
+                title: this.getAttribute('title'),
+                content: this.innerHTML,
+                id: "x-card-" + Math.floor((Math.random() * 10000) + 1),
+                fold: this.getAttribute('fold') === "on"
+            };
+            this.outerHTML = `
+				<div class="shortcode shortcode-card${this.options.fold ? ' fold' : ''} x-card${this.options.fold ? ' fold' : ''}" id="${this.options.id}">
+				    <div class="title">${(this.options.title === '{title}' || this.options.title === '') ? XConf.i18n.XCard.title : this.options.title}</div>
+				    <div class="content">${(this.options.content === '{content}' || this.options.content === '') ? XConf.i18n.XCard.content : this.options.content}</div>
+				</div>
+			`;
+            let _this = this;
+            document.querySelector('#' + this.options.id + ' .title').addEventListener('click', function (e) {
+                let card = document.getElementById(e.target.parentElement.id);
+                if (card.classList.contains('fold'))
+                    card.classList.remove('fold');
+                else
+                    card.classList.add('fold');
+            });
+        }
+    }
+
+    window.customElements.define('x-card', xCard);
 });

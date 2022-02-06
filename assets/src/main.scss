@@ -282,7 +282,7 @@ img.owo {
   }
 }
 
-
+/** 普通短代码 */
 .shortcode {
   &-photos {
     padding: 2px;
@@ -339,14 +339,59 @@ img.owo {
     display: inline-block;
     border-radius: .22rem;
     white-space: normal;
-    padding: .375rem 1rem;
     cursor: pointer;
-    color: #fff;
-    background-color: #f1404b;
-    box-shadow: 0 5px 20px -3px rgba(249, 100, 90, 0.6) !important;
+
+
+    &-primary {
+      color: #fff;
+      background-color: #f1404b;
+    }
+
+    &-secondary {
+      background-color: #252c41;
+      border-color: #252c41;
+      color: #fff;
+    }
+
+    &-light {
+      color: #252c41;
+      background-color: #f4f5f9;
+      border-color: #f4f5f9;
+    }
+
+    &-info {
+      color: #fff;
+      background-color: #17a2b8;
+      border-color: #17a2b8;
+    }
+
+    &-success {
+      color: #fff;
+      background-color: #28a745;
+      border-color: #28a745;
+    }
+
+    &-warning {
+      color: #212529;
+      background-color: #ffc107;
+      border-color: #ffc107;
+    }
+
 
     p {
       margin: 0;
+    }
+
+    .icon {
+      padding: .375em;
+      padding-left: .75em;
+      display: inline-block;
+    }
+
+    .content {
+      padding: .375em;
+      padding-right: .75em;
+      display: inline-block;
     }
 
     svg {
@@ -356,6 +401,7 @@ img.owo {
     &:hover {
       color: #fff;
       box-shadow: 0 5px 20px -3px rgba(37, 44, 65, 0.33) !important;
+      text-decoration: none;
     }
 
     &:focus,
@@ -389,30 +435,92 @@ img.owo {
 
   &-player {
     background: #eee;
-    min-height: 120px;
     display: flex;
     justify-content: center;
     align-items: center;
     border: 1px solid #0c0c0c;
 
     // thanks https://blog.csdn.net/u014291497/article/details/78398146
-    .play {
-      padding: 0;
-      background-color: transparent;
-      box-sizing: border-box;
-      height: 74px;
-      border-style: solid;
-      border-width: 37px 0 37px 60px;
-      border-color: transparent transparent transparent black;
-      transition: all .5s ease;
+    //.play {
+    //  padding: 0;
+    //  background-color: transparent;
+    //  box-sizing: border-box;
+    //  height: 74px;
+    //  border-style: solid;
+    //  border-width: 37px 0 37px 60px;
+    //  border-color: transparent transparent transparent black;
+    //  transition: all .5s ease;
+    //  cursor: pointer;
+    //}
+    //
+    //.play:hover {
+    //  border-style: double;
+    //  border-width: 0px 0px 0px 60px;
+    //}
+
+  }
+
+  &-card {
+    display: block;
+    margin: 0 auto;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    border: 1px solid #ebeef5;
+    background: #fff;
+    position: relative;
+
+    > .title {
       cursor: pointer;
+      display: block;
+      padding: 8px 10px;
+      border-bottom: 1px solid #ebeef5;
+      color: #303133;
+      user-select: none;
+
+      &:after {
+        content: "\f0d8";
+        font: normal normal normal 14px/1 FontAwesome;
+        text-rendering: auto;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        transform: rotate(0deg);
+        transition: transform .2s;
+      }
     }
 
-    .play:hover {
-      border-style: double;
-      border-width: 0px 0px 0px 60px;
+    > .content {
+      display: block;
+      padding: 10px;
+      color: #606266;
+      transform: rotateX(0deg);
+      transition: all .2s;
+      transform-origin: 0 0;
     }
 
+    &.fold {
+      > .title {
+        &:after {
+          transform: rotate(180deg);
+        }
+      }
+
+      > .content {
+        transform: rotateX(-90deg);
+        height: 0;
+        padding: 0;
+      }
+    }
+  }
+}
+
+/** 自定义标签 */
+x {
+  &-player {
+    iframe {
+      width: 100%;
+      height: 300px;
+    }
   }
 }
 

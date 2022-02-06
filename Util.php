@@ -284,8 +284,8 @@ class Util
                         return '<div class="embed"><strong>'
                             + tag + '</strong> : ' + $.trim(src) + '</div>';
                     });
-
-                    return DOMPurify.sanitize(html, {USE_PROFILES: {html: true}});
+                    return html;
+                    // return DOMPurify.sanitize(html, {USE_PROFILES: {html: true}});
                 });
 
                 editor.hooks.chain('onPreviewRefresh', function () {
@@ -403,6 +403,8 @@ class Util
             });
         </script>
         <script src="<?php echo Util::pluginUrl('assets/dist/js/main.js'); ?>"></script>
+        <script src="<?php echo Util::pluginUrl('assets/dist/js/short.js'); ?>"></script>
+        <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css">
         <?php
     }
 

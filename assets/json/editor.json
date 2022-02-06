@@ -138,7 +138,7 @@
         "name": "插入按钮",
         "insertBefore": "#wmd-spacer5",
         "template": "[x-btn type=\"{type}\" icon=\"{icon}\" href=\"{href}\" content=\"{content}\" /]\n",
-        "preview": "<div class=\"shortcode shortcode-btn\"$3><p>按钮</p></div>",
+        "preview": "<x-btn$3>$5</div>",
         "replacement": "<x-btn$3>$5</x-btn>",
         "params": {
             "type": {
@@ -173,12 +173,42 @@
         "insertBefore": "#wmd-spacer5",
         "icon": "<svg t=\"1620054439293\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"4461\" width=\"20\" height=\"20\"><path d=\"M887.232 69.504H130.56a62.976 62.976 0 0 0-62.912 62.912v757.504c0 34.624 28.224 62.784 62.912 62.784h756.672c34.688 0 62.912-28.16 62.912-62.784V132.416a62.976 62.976 0 0 0-62.912-62.912zM122.88 255.168h772.032v519.68H122.88v-519.68z m7.68-130.368h756.672a7.68 7.68 0 0 1 7.68 7.616v67.456H122.88V132.416a7.68 7.68 0 0 1 7.68-7.616z m756.672 772.672H130.56a7.68 7.68 0 0 1-7.68-7.552v-59.84h772.032v59.904a7.68 7.68 0 0 1-7.68 7.488z\" p-id=\"4462\"></path><path d=\"M673.28 487.168L452.032 359.488a27.712 27.712 0 0 0-41.408 23.936v255.488a27.648 27.648 0 0 0 27.584 27.648h0.064a27.072 27.072 0 0 0 13.888-3.776l221.12-127.68a27.584 27.584 0 0 0 0.192-47.808l-0.192-0.128zM465.856 591.04V431.232L604.16 511.104 465.856 591.04z\" p-id=\"4463\"></path></svg>",
         "template": "[x-player src=\"{src}\" /]\n",
-        "preview": "<div class=\"shortcode shortcode-player\"$3><div class=\"play\"></div></div>",
+        "preview": "<x-player$3>$5</x-player>",
         "replacement": "<x-player$3>$5</x-player>",
         "params": {
             "src": {
                 "label": "视频链接",
                 "required": true
+            }
+        }
+    },
+    "x-card": {
+        "name": "卡片",
+        "insertBefore": "#wmd-spacer5",
+        "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 50 50\">\n  <path d=\"M13 2 A 1.0001 1.0001 0 0 0 12 3L12 12L5 12 A 1.0001 1.0001 0 0 0 4 13L4 47 A 1.0001 1.0001 0 0 0 5 48L39 48 A 1.0001 1.0001 0 0 0 40 47L40 36L45 36 A 1.0001 1.0001 0 0 0 46 35L46 3 A 1.0001 1.0001 0 0 0 45 2L13 2 z M 18.386719 4L44 4L44 34L40 34L40 13 A 1.0001 1.0001 0 0 0 39.359375 12.068359 A 1.0001 1.0001 0 0 0 39.359375 12.066406L18.386719 4 z M 14 4.4570312L33.613281 12L14 12L14 4.4570312 z M 6 14L38 14L38 46L6 46L6 14 z M 12 20 A 1.0001 1.0001 0 0 0 11 21L11 28 A 1.0001 1.0001 0 0 0 12 29L32 29 A 1.0001 1.0001 0 0 0 33 28L33 21 A 1.0001 1.0001 0 0 0 32 20L12 20 z M 13 22L31 22L31 27L13 27L13 22 z M 11 33L11 35L33 35L33 33L11 33 z M 11 38L11 40L33 40L33 38L11 38 z\" />\n</svg>",
+        "template": "[x-card title='{title}' fold='{fold}']{content}[/x-card]\n",
+        "preview": "<x-card$3>$5</x-card>",
+        "replacement": "<x-card$3>$5</x-card>",
+        "params": {
+            "title": {
+                "label": "标题",
+                "default": "卡片标题",
+                "placeholder": "输入标题"
+            },
+            "content": {
+                "label": "内容",
+                "tag": "textarea",
+                "default": "卡片内容",
+                "placeholder": "输入内容"
+            },
+            "fold": {
+                "tag": "select",
+                "label": "折叠",
+                "default": "off",
+                "options": {
+                    "off": "默认展开",
+                    "on": "默认折叠"
+                }
             }
         }
     }

@@ -404,6 +404,10 @@ class Util
         </script>
         <script src="<?php echo Util::pluginUrl('assets/dist/js/main.js'); ?>"></script>
         <script src="<?php echo Util::pluginUrl('assets/dist/js/short.js'); ?>"></script>
+
+        <?php $hljs = Helper::options()->XHljsCss ?? 'atelier-cave-light.css'; ?>
+        <link rel="stylesheet"
+              href="<?php echo self::pluginUrl('assets/dist/external/highlight.js/' . $hljs); ?>">
         <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css">
         <?php
     }
@@ -470,6 +474,14 @@ class Util
                     }
                 }
             }
+
+            // Markdown 增强
+            if (strpos($text, '[x]') !== false || strpos($text, '[ ]') !== false) {
+                $text = strtr($text, array(
+                    "[x]" => '<input type="checkbox" class="x-checkbox" checked disabled></input>',
+                    "[ ]" => '<input type="checkbox" class="x-checkbox" disabled></input>'
+                ));
+            }
         }
         return Util::parseEmoji($text);
     }
@@ -481,6 +493,13 @@ class Util
     {
         if ($last) $text = $last;
         if (Util::xPlugin('XShortCodeParse', 'on') === 'on') {
+            // Markdown 增强
+            if (strpos($text, '[x]') !== false || strpos($text, '[ ]') !== false) {
+                $text = strtr($text, array(
+                    "[x]" => '<input type="checkbox" class="x-checkbox" checked disabled></input>',
+                    "[ ]" => '<input type="checkbox" class="x-checkbox" disabled></input>'
+                ));
+            }
             if (false !== strpos($text, '[post')) {
                 $pattern = Util::get_shortcode_regex(array('post'));
                 $text = preg_replace_callback("/$pattern/", function ($m) {
@@ -548,7 +567,7 @@ class Util
             if ($post->have()) {
                 $post->abstract = Util::subStr($post->excerpt, 120);
                 $post->thumb = Util::xThumbs($post, 1, true);
-                $template = '<div class="shortcode shortcode-post">' .
+                $template = '<div class="x-post">' .
                     '<div class="text-content">' .
                     '<div class="title"><a href="{permalink}">{title}</a></div>' .
                     '<div class="content">{abstract}</div><a class="mt-2 btn btn-primary x-btn-rounded" href="{permalink}"> ' . _t("查看详情") . '</a></div>' .

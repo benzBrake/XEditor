@@ -126,6 +126,12 @@ class XEditor {
         this.editor = window._editor;
         delete window._editor;
         this.initToolbar();
+        const hljs = require('highlight.js');
+        setInterval(function () {
+            document.querySelectorAll('pre code').forEach((el) => {
+                hljs.highlightElement(el);
+            });
+        }, 500);
     }
 
     /**
@@ -147,7 +153,6 @@ class XEditor {
         this.textarea.focus();
         this.textarea.trigger('input');
         this.textarea.setSelection(offset, offset);
-        this.editor.refreshPreview();
     }
 
     /**

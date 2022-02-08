@@ -10,6 +10,10 @@ x-photos {
   display: flex;
   flex-wrap: wrap;
 
+  br {
+    display: none;
+  }
+
   &:after {
     content: '';
     flex-grow: 999999999;
@@ -17,11 +21,9 @@ x-photos {
     height: 0;
   }
 
-  br {
-    display: none;
-  }
 
-  .photo {
+
+  a {
     margin: 2px;
     height: 200px;
     flex-grow: 1;
@@ -30,25 +32,33 @@ x-photos {
     width: unset;
     justify-content: center;
 
-    img {
-      height: 100px;
-      width: calc(100% - 4px);
-      display: block;
+    > img {
+      margin: 0;
+      max-width: 100%;
+      min-width: 100%;
+      height: 200px !important;
       object-fit: cover;
-      margin: 2px;
+      vertical-align: bottom;
+    }
+
+    span {
+      position: absolute;
+      bottom: 5px;
     }
   }
 
-  img {
+  > img {
+    margin: 2px;
     height: 200px;
     flex-grow: 1;
-    margin: 2px;
-    display: block;
-    object-fit: cover;
+    display: flex;
+    position: relative;
+    width: unset;
+    justify-content: center;
   }
 }
 
-.shortcode {
+.x {
   display: flex;
   margin: 5px 0;
 
@@ -136,7 +146,7 @@ x-photos {
 }
 
 @media (min-width: 768px) {
-  .shortcode {
+  .x {
     &-post {
       .text-content {
         display: block;

@@ -576,7 +576,7 @@ class Util
         $attrs = Util::shortcode_parse_atts($m[3]);
         if (is_array($attrs) && array_key_exists('cid', $attrs)) {
             $post = Helper::widgetById('Contents', intval($attrs['cid']));
-            if ($post->have()) {
+            if ($post->have() && !is_null($post->excerpt)) {
                 $post->abstract = Util::subStr($post->excerpt, 120);
                 $post->thumb = Util::xThumbs($post, 1, true);
                 $template = '<div class="x-post">' .

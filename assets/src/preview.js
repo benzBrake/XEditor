@@ -45,6 +45,11 @@ class XPreview {
      * @returns string
      */
     makeHtml(html) {
+
+        if (html.indexOf('　') !== -1) {
+            html = html.replace(/　/g, '&emsp;');
+        }
+
         $.each(this.shortcodes, function (name, value) {
             html = html.replace(value.regex, value.replacement);
         });
@@ -63,20 +68,13 @@ class XPreview {
             $1 = encodeURI($1).replace(/%/g, '');
             return `<img title="${name}" alt="${name}" class="owo" src="${window.XConf.options.pluginUrl}/assets/images/owo/aru/${$1}_2x.png" />`;
         });
+
         $.each(this.shortcodes, function (name, value) {
             html = html.replace(value.regex, value.replacement);
         });
         return html;
     }
 
-    /**
-     * 转换标签
-     * @param preview
-     */
-    convertTag(preview) {
-        let that = this;
-        // Need Implement
-    }
 
     /**
      * 来自 Wordpress

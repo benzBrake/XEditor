@@ -11,4 +11,5 @@ mix.js('assets/src/main.js', 'assets/dist/js')
     .sass('assets/src/config.scss', 'assets/dist/css')
     .sass('assets/src/front.scss', 'assets/dist/css')
     .version()
+    .copy('assets/src/hyperdown.js', 'assets/dist/external')
     .copyDirectory('node_modules/highlight.js/styles', 'assets/dist/external/highlight.js');

@@ -2,6 +2,7 @@
 
 namespace TypechoPlugin\AAEditor;
 
+use AAEditor\Libs\Parser;
 use Typecho\Common;
 use Typecho\Http\Client;
 use Typecho\Plugin;
@@ -39,7 +40,7 @@ class Util
         Plugin::factory('admin/write-page.php')->bottom = [__CLASS__, 'editorFooter'];
 
         // 自动拾取标签
-        Plugin::factory('Widget_Contents_Post_Edit')->write = array(__CLASS__, 'write');
+        Plugin::factory('Widget_Contents_Post_Edit')->write = [__CLASS__, 'write'];
 
         // 短代码
         Plugin::factory('admin/common.php')->begin = [__CLASS__, 'shortCodeInit'];
@@ -106,7 +107,6 @@ class Util
     {
         ?>
         <script>
-
             document.addEventListener('DOMContentLoaded', function () {
                 <?php if (Util::xPlugin('XAutoSlugType', 'pinyin') !== 'none'): ?>
                 const baiduSlug = function () {
@@ -147,7 +147,6 @@ class Util
             });
         </script>
         <?php
-
     }
 
     /**
@@ -160,7 +159,7 @@ class Util
     {
         $options = Helper::options();
         ?>
-        <script src="<?php $options->adminStaticUrl('js', 'hyperdown.js'); ?>"></script>
+        <script src="<?php echo Util::pluginUrl('assets/dist/external/hyperdown.js'); ?>"></script>
         <script src="<?php $options->adminStaticUrl('js', 'pagedown.js'); ?>"></script>
         <script src="<?php $options->adminStaticUrl('js', 'paste.js'); ?>"></script>
         <script src="<?php $options->adminStaticUrl('js', 'purify.js'); ?>"></script>
@@ -261,6 +260,9 @@ class Util
                 // 修正白名单
                 converter.hook('makeHtml', function (html) {
 
+                    // 处理短代码
+                    html = window.XPreview.makeHtml(html);
+
                     html = html.replace('<p><!--more--></p>', '<!--more-->');
 
                     if (html.indexOf('<!--more-->') > 0) {
@@ -272,8 +274,6 @@ class Util
                             + '<div class="details">' + details + '</div>';
                     }
 
-                    // 处理短代码
-                    html = window.XPreview.makeHtml(html);
 
                     // 替换block
                     html = html.replace(/<(iframe|embed)\s+([^>]*)>/ig, function (all, tag, src) {
@@ -303,7 +303,6 @@ class Util
                         });
                     }
 
-                    window.XPreview.convertTag(preview);
                 });
 
                 <?php \Typecho\Plugin::factory('admin/editor-js.php')->markdownEditor($content); ?>
@@ -408,7 +407,8 @@ class Util
         <?php $hljs = Helper::options()->XHljsCss ?? 'atelier-cave-light.css'; ?>
         <link rel="stylesheet"
               href="<?php echo self::pluginUrl('assets/dist/external/highlight.js/' . $hljs); ?>">
-        <link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet"
+              href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css">
         <?php
     }
 
@@ -434,11 +434,23 @@ class Util
     }
 
     /**
+     * @param $text
+     * @return mixed
+     */
+    public static function markdown($text)
+    {
+        $parser = new Parser();
+        return $parser->makeHtml($text);
+    }
+
+    /**
      * 内容处理
      * @param $text
      * @param $archive
      * @param $last
      * @return string
+     * @throws Db\Exception
+     * @throws Exception
      */
     public static function contentEx($text, $archive, $last): string
     {
@@ -563,7 +575,7 @@ class Util
         }
         $attrs = Util::shortcode_parse_atts($m[3]);
         if (is_array($attrs) && array_key_exists('cid', $attrs)) {
-            $post = Helper::widgetById('Contents', $attrs['cid']);
+            $post = Helper::widgetById('Contents', intval($attrs['cid']));
             if ($post->have()) {
                 $post->abstract = Util::subStr($post->excerpt, 120);
                 $post->thumb = Util::xThumbs($post, 1, true);

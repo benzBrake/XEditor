@@ -11035,6 +11035,10 @@ var XPreview = /*#__PURE__*/function () {
   _createClass(XPreview, [{
     key: "makeHtml",
     value: function makeHtml(html) {
+      if (html.indexOf('　') !== -1) {
+        html = html.replace(/　/g, '&emsp;');
+      }
+
       jquery__WEBPACK_IMPORTED_MODULE_0___default().each(this.shortcodes, function (name, value) {
         html = html.replace(value.regex, value.replacement);
       }); // 增强
@@ -11057,16 +11061,6 @@ var XPreview = /*#__PURE__*/function () {
         html = html.replace(value.regex, value.replacement);
       });
       return html;
-    }
-    /**
-     * 转换标签
-     * @param preview
-     */
-
-  }, {
-    key: "convertTag",
-    value: function convertTag(preview) {
-      var that = this; // Need Implement
     }
     /**
      * 来自 Wordpress

@@ -118,7 +118,7 @@ class Plugin implements PluginInterface
                 </div>
             <?php endif; ?>
             <div class="x-sticky">
-                <div class="x-logo"><?php echo Helper::options()->theme . ' ' . Plugin::version(); ?></div>
+                <div class="x-logo"><?php echo 'AAEditor' . Plugin::version(); ?></div>
                 <ul class="x-tabs">
                     <li class="item" data-class="x-notice"><?php _e("最新公告"); ?></li>
                     <li class="item" data-class="x-basic"><?php _e("基础设置"); ?></li>
@@ -152,6 +152,17 @@ class Plugin implements PluginInterface
         );
         $edit->setAttribute('class', 'x-item x-basic');
         $form->addInput($edit->multiMode());
+
+        $edit = new Form\Element\Select(
+            'XMathJaxSupport',
+            array(
+                'on' => _t('开启（默认）'),
+                'off' => _t('关闭')
+            ), 'on',
+            _t('是否开启公式支持'),
+            _t('说明：开启公式支持后前台会引入 JS 解析公式'));
+        $edit->setAttribute('class', 'x-item x-basic');
+        $form->addInput($edit);
 
         $edit = new Form\Element\Select(
             'XLoadFontAwesome',

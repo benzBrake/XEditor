@@ -198,7 +198,7 @@
         "name": "卡片",
         "insertBefore": "#wmd-spacer5",
         "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" viewBox=\"0 0 50 50\">\n  <path d=\"M13 2 A 1.0001 1.0001 0 0 0 12 3L12 12L5 12 A 1.0001 1.0001 0 0 0 4 13L4 47 A 1.0001 1.0001 0 0 0 5 48L39 48 A 1.0001 1.0001 0 0 0 40 47L40 36L45 36 A 1.0001 1.0001 0 0 0 46 35L46 3 A 1.0001 1.0001 0 0 0 45 2L13 2 z M 18.386719 4L44 4L44 34L40 34L40 13 A 1.0001 1.0001 0 0 0 39.359375 12.068359 A 1.0001 1.0001 0 0 0 39.359375 12.066406L18.386719 4 z M 14 4.4570312L33.613281 12L14 12L14 4.4570312 z M 6 14L38 14L38 46L6 46L6 14 z M 12 20 A 1.0001 1.0001 0 0 0 11 21L11 28 A 1.0001 1.0001 0 0 0 12 29L32 29 A 1.0001 1.0001 0 0 0 33 28L33 21 A 1.0001 1.0001 0 0 0 32 20L12 20 z M 13 22L31 22L31 27L13 27L13 22 z M 11 33L11 35L33 35L33 33L11 33 z M 11 38L11 40L33 40L33 38L11 38 z\" />\n</svg>",
-        "template": "[x-card title='{title}' fold='{fold}']{content}[/x-card]\n",
+        "template": "\n[x-card title=\"{title}\" fold=\"{fold}\"]\n{content}\n[/x-card]\n",
         "preview": "<x-card$3>$5</x-card>",
         "replacement": "<x-card$3>$5</x-card>",
         "params": {

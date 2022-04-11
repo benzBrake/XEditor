@@ -22,7 +22,6 @@ x-photos {
   }
 
 
-
   a {
     margin: 2px;
     height: 200px;
@@ -68,6 +67,7 @@ x-photos {
     flex-direction: row;
     background: #ecf5ff;
     border: 1px solid #e9e9eb;
+    border-radius: 5px;
 
     .text-content {
       flex: 1 1 auto;
@@ -140,17 +140,22 @@ x-photos {
     padding: 10px;
     background: repeating-linear-gradient(145deg, #f2f2f2, #f2f2f2 15px, #fff 0, #fff 30px);
     border: 1px solid #eee;
+    border-radius: 5px;
 
     &.show {
       background: #eee;
     }
 
-    br:first-child {
+    > br:first-child {
+      display: none;
+    }
+
+    > br:last-child {
       display: none;
     }
 
     a {
-      color: var(--theme, '#0d6efd');
+      color: var(--theme, #0d6efd);
       transition: all .2s;
 
       &:hover {

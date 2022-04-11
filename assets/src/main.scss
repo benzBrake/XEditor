@@ -87,10 +87,14 @@ img.owo {
 
 .x {
   &-hide {
+    border-radius: 5px;
     padding: 5px;
     background: repeating-linear-gradient(145deg, #f2f2f2, #f2f2f2 15px, #fff 0, #fff 30px);
 
-    br:first-child {
+    > br:first-child {
+      display: none;
+    }
+    > br:last-child {
       display: none;
     }
   }
@@ -102,6 +106,7 @@ img.owo {
     align-items: center;
     justify-content: center;
     padding: 5px;
+    border-radius: 5px;
 
     p {
       margin: 0;

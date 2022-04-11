@@ -203,7 +203,7 @@ class Parser
 
     /**
      * @param $text
-     * @return mixed
+     * @return array|string|string[]
      */
     private function initText($text)
     {
@@ -561,7 +561,7 @@ class Parser
 
     /**
      * @param $text
-     * @return mixed
+     * @return array|string|string[]|null
      */
     private function parseInlineCallback($text)
     {
@@ -1629,7 +1629,7 @@ class Parser
      * @param $url
      * @param bool $parseTitle
      *
-     * @return mixed
+     * @return array|string|string[]|null
      */
     private function cleanUrl($url, $parseTitle = false)
     {
@@ -1662,7 +1662,7 @@ class Parser
 
     /**
      * @param $str
-     * @return mixed
+     * @return array|string|string[]
      */
     private function escapeBracket($str)
     {

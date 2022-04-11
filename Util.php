@@ -59,7 +59,7 @@ class Util
     /**
      * 禁用插件
      *
-     * @return mixed
+     * @return string
      * @throws Exception|Db\Exception
      */
     public static function deactivate()
@@ -444,7 +444,7 @@ class Util
 
     /**
      * @param $text
-     * @return mixed
+     * @return string
      */
     public static function markdown($text)
     {

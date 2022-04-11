@@ -23,7 +23,7 @@
 #wmd-preview {
   position: absolute;
   top: 0;
-  right: 0%;
+  right: 0;
   overflow-y: auto;
   background: #FFF;
   border: 1px solid #D9D9D6;
@@ -37,7 +37,6 @@
     border-radius: .33em;
     margin: 20px 0;
     overflow-y: auto;
-    overflow: hidden;
     white-space: pre-wrap;
 
     code {

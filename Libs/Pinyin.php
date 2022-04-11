@@ -579,5 +579,6 @@ class Pinyin
             }
             next($dict);
         }
+        return "";
     }
 }

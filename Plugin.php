@@ -13,11 +13,11 @@ use Utils\Helper;
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
 /**
- * 虾米皮皮乐的编辑器 <span style="color: #fff; background-color: green; font-weight: bold; padding: 3px 5px; margin: 0 5px;">预览版</span>
+ * 虾米皮皮乐的编辑器 <span style="color: #fff; background-color: #f1404b; font-weight: bold; padding: 3px 5px; margin: 0 5px;">正式版</span>
  *
  * @package AAEditor
  * @author Ryan
- * @version 0.1.5
+ * @version 0.1.6
  * @link https://doufu.ru
  *
  */

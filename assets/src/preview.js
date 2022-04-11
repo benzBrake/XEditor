@@ -53,6 +53,8 @@ class XPreview {
         $.each(this.shortcodes, function (name, value) {
             html = html.replace(value.regex, value.replacement);
         });
+
+
         // 增强
         html = html.replace(/\[x]/g, '<input type="checkbox" class="x-checkbox" checked disabled></input>');
         html = html.replace(/\[ ]/g, '<input type="checkbox" class="x-checkbox" disabled></input>');

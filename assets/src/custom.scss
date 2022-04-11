@@ -694,6 +694,10 @@ x {
       transform: rotateX(0deg);
       transition: all .2s;
       transform-origin: 0 0;
+
+      > br:first-child {
+        display: none;
+      }
     }
 
     &.fold {

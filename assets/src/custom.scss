@@ -661,7 +661,7 @@ x {
   &-card {
     display: block;
     margin: 0 auto;
-    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     border: 1px solid #ebeef5;
     background: #fff;
@@ -676,12 +676,11 @@ x {
       user-select: none;
 
       &:after {
-        content: "\f0d8";
-        font: normal normal normal 14px/1 FontAwesome;
+        content: "▲";
         text-rendering: auto;
         position: absolute;
-        top: 15px;
-        right: 15px;
+        top: 8px;
+        right: 8px;
         transform: rotate(0deg);
         transition: transform .2s;
       }
@@ -692,8 +691,6 @@ x {
       padding: 10px;
       color: #606266;
       transform: rotateX(0deg);
-      transition: all .2s;
-      transform-origin: 0 0;
 
       > br:first-child {
         display: none;

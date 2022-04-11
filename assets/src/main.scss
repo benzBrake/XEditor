@@ -33,17 +33,24 @@
 
   pre {
     background-color: hsl(0, 0%, 99.2%);
+    border: 1px solid #D9D9D6;
     border-radius: .33em;
     margin: 20px 0;
     overflow-y: auto;
     overflow: hidden;
     white-space: pre-wrap;
 
+    code {
+      border: 0;
+      border-radius: 0;
+    }
   }
 
   code {
     background: none;
+    border-radius: .33em;
     font-size: 15px !important;
+    border: 1px solid #D9D9D6;
   }
 }
 
@@ -92,7 +99,6 @@ img.owo {
   &-post {
     background: #eee;
     min-height: 30px;
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;

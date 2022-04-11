@@ -232,7 +232,7 @@ x {
   }
 
   &-btn {
-    display: inline-block;
+    display: table;
     transition: all .2s;
     border: 1px solid transparent;
 
@@ -243,15 +243,17 @@ x {
     .icon {
       background-color: rgba(0, 0, 0, 0.1);
       padding: 0 .75em;
-      height: 32px;
+      height: 24px;
+      text-align: center;
       vertical-align: middle;
       display: table-cell;
     }
 
     .content {
       display: table-cell;
-      height: 32px;
-      line-height: 32px;
+      vertical-align: middle;
+      height: 24px;
+      line-height: 24px;
       padding: 0 .75em;
     }
 
@@ -771,6 +773,20 @@ x {
         border-top: 0;
         border-left: 0;
         transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+/** hack */
+#wmd-preview {
+  .x {
+    &-btn {
+      display: table;
+
+      .icon,
+      .content {
+        display: table-cell;
       }
     }
   }

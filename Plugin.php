@@ -17,7 +17,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  *
  * @package AAEditor
  * @author Ryan
- * @version 0.1.4
+ * @version 0.1.5
  * @link https://doufu.ru
  *
  */
@@ -56,7 +56,6 @@ class Plugin implements PluginInterface
      */
     public static function config(Form $form)
     {
-// 增加数据库字段
         $db = Db::get();
         $notice = Widget::widget('Widget_Notice');
         $archive = Widget::widget('Widget_Archive');
@@ -122,7 +121,7 @@ class Plugin implements PluginInterface
                 <ul class="x-tabs">
                     <li class="item" data-class="x-notice"><?php _e("最新公告"); ?></li>
                     <li class="item" data-class="x-basic"><?php _e("基础设置"); ?></li>
-                    <li class="item" data-class="x-warn"><?php _e("慎重选择"); ?></li>
+                    <li class="item" data-class="x-warn"><?php _e("慎重修改"); ?></li>
                 </ul>
                 <ul class="x-backup">
                     <span class="backup"
@@ -215,6 +214,12 @@ class Plugin implements PluginInterface
 
         $edit = new Form\Element\Text('XAutoSlugBaiduKey', null, null, _t('SLUG 翻译：百度翻译 API KEY'), _t('<a href="https://api.fanyi.baidu.com/api/trans/product/index">获取 API Key</a>'));
         $edit->setAttribute('class', 'x-item x-basic');
+        $form->addInput($edit->multiMode());
+
+        $demo = file_get_contents(dirname(__FILE__) . '/assets/json/external_demo.json');
+
+        $edit = new Form\Element\Textarea('XExternalButtons', null, $demo, _t('增加额外按钮'), _t('需要天旭JSON字符串，不懂别动'));
+        $edit->setAttribute('class', 'x-item x-warn');
         $form->addInput($edit->multiMode());
 
         $edit = new Form\Element\Radio('XCleanDatabase', array('clean' => _t('清理'), 'none' => _t('保留')), 'none', _t('禁用插件后是否保留数据'), _t('注意：如果打开了此开关，禁用插件时自动清理插件产生的数据（包括插件选项备份）'));

@@ -3,6 +3,7 @@
 namespace TypechoPlugin\AAEditor;
 
 use AAEditor\Libs\Parser;
+use ReflectionClass;
 use Typecho\Common;
 use Typecho\Http\Client;
 use Typecho\Plugin;
@@ -164,6 +165,12 @@ class Util
         <script src="<?php $options->adminStaticUrl('js', 'paste.js'); ?>"></script>
         <script src="<?php $options->adminStaticUrl('js', 'purify.js'); ?>"></script>
         <link rel="stylesheet" href="<?php echo Util::pluginUrl('assets/dist/css/main.css'); ?>">
+        <?php
+        $baseToolbar = json_decode(file_get_contents(Util::pluginUrl('assets/json/editor.json')), true);
+        $external = json_decode(Helper::options()->plugin('AAEditor')->XExternalButtons, true);
+        $external = $external ?? [];
+        $toolbar = array_merge($baseToolbar, $external);
+        ?>
         <script>
             window.XConf = {
                 options: {
@@ -173,7 +180,7 @@ class Util
                     emoji: {
                         path: '<?php echo $options->pluginUrl; ?>',
                     },
-                    toolbarJson: <?php echo file_get_contents(Util::pluginUrl('assets/json/editor.json')); ?>
+                    toolbarJson: <?php echo json_encode($toolbar); ?>
                 },
                 i18n: {
                     cancel: '<?php _e("取消"); ?>',
@@ -405,8 +412,10 @@ class Util
         <script src="<?php echo Util::pluginUrl('assets/dist/js/short.js'); ?>"></script>
 
         <?php $hljs = Helper::options()->XHljsCss ?? 'atelier-cave-light.css'; ?>
+        <?php if ($hljs !== 'off'): ?>
         <link rel="stylesheet"
               href="<?php echo self::pluginUrl('assets/dist/external/highlight.js/' . $hljs); ?>">
+        <?php endif; ?>
         <link rel="stylesheet"
               href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/font-awesome/4.7.0/css/font-awesome.min.css">
         <?php
@@ -748,7 +757,7 @@ class Util
      * @since 4.4.0
      *
      */
-    public static function get_shortcode_atts_regex()
+    public static function get_shortcode_atts_regex(): string
     {
         return '/([\w-]+)\s*=\s*"([^"]*)"(?:\s|$)|([\w-]+)\s*=\s*\'([^\']*)\'(?:\s|$)|([\w-]+)\s*=\s*([^\s\'"]+)(?:\s|$)|"([^"]*)"(?:\s|$)|\'([^\']*)\'(?:\s|$)|(\S+)(?:\s|$)/';
     }
@@ -758,7 +767,7 @@ class Util
      * @param $text
      * @return string
      */
-    public static function parseEmoji($text)
+    public static function parseEmoji($text): string
     {
         // 表情处理 来自 JOE 主题的 EMOJI
         $text = preg_replace_callback(
@@ -797,38 +806,14 @@ class Util
         //插件启用,且未手动设置标签
         if (!$contents['tags']) {
             Widget::widget('Widget_Metas_Tag_Admin')->to($tags);
-            foreach ($tags->stack as $tag) {
-                $tagNames[] = $tag['name'];
-            }
-            //过滤 html 标签等无用内容
-            $postString = json_encode($text);
-            $ch = curl_init('https://api.bosonnlp.com/tag/analysis?space_mode=0&oov_level=0&t2s=0');
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $postString);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER,
-                array(
-                    'Content-Type: application/json',
-                    'Accept: application/json',
-                    'X-Token: fpm1fDvA.5220.GimJs8QvViSK'
-                )
-            );
-            $result = curl_exec($ch);
-            curl_close($ch);
-            $result = json_decode($result);
-            $ignoreTag = array('w', 'wkz', 'wky', 'wyz', 'wyy', 'wj', 'ww', 'wt', 'wd', 'wf', 'wn', 'wm', 'ws', 'wp', 'wb', 'wh', 'email', 'tel', 'id', 'ip', 'url', 'o', 'y', 'u', 'uzhe', 'ule', 'ugou', 'ude', 'usou', 'udeng', 'uyy', 'udh', 'uzhi', 'ulian', 'c', 'p', 'pba', 'pbei', 'd', 'dl', 'q', 'm', 'r', 'z', 'b', 'bl', 'a', 'ad', 'an', 'al', 'v', 'vd', 'vshi', 'vyou', 'vl', 'f', 's', 't', 'nl');
-            $sourceTags = array();
-            foreach ($result[0]->tag as $key => $tag) {
-                if (!in_array($tag, $ignoreTag)) {
-                    if (in_array($result[0]->word[$key], $tagNames)) {
-                        if (in_array($result[0]->word[$key], $sourceTags)) continue;
-                        $sourceTags[] = $result[0]->word[$key];
-                    }
+            $stack = self::reflectGetValue($tags, 'stack');
+            if (is_array($stack)) {
+                foreach ($stack as $tag) {
+                    $tagNames[] = $tag['name'];
                 }
-            }
-            $contents['tags'] = implode(',', array_unique($sourceTags));
-            if (count($contents['tags']) < 3) {
-                $ch = curl_init('https://api.bosonnlp.com/keywords/analysis?top_k=5');
+                //过滤 html 标签等无用内容
+                $postString = json_encode($text);
+                $ch = curl_init('https://api.bosonnlp.com/tag/analysis?space_mode=0&oov_level=0&t2s=0');
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $postString);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -842,11 +827,38 @@ class Util
                 $result = curl_exec($ch);
                 curl_close($ch);
                 $result = json_decode($result);
-                $a = [];
-                foreach ($result as $re) {
-                    $a[] = $re[1];
+                $ignoreTag = array('w', 'wkz', 'wky', 'wyz', 'wyy', 'wj', 'ww', 'wt', 'wd', 'wf', 'wn', 'wm', 'ws', 'wp', 'wb', 'wh', 'email', 'tel', 'id', 'ip', 'url', 'o', 'y', 'u', 'uzhe', 'ule', 'ugou', 'ude', 'usou', 'udeng', 'uyy', 'udh', 'uzhi', 'ulian', 'c', 'p', 'pba', 'pbei', 'd', 'dl', 'q', 'm', 'r', 'z', 'b', 'bl', 'a', 'ad', 'an', 'al', 'v', 'vd', 'vshi', 'vyou', 'vl', 'f', 's', 't', 'nl');
+                $sourceTags = array();
+                foreach ($result[0]->tag as $key => $tag) {
+                    if (!in_array($tag, $ignoreTag)) {
+                        if (in_array($result[0]->word[$key], $tagNames)) {
+                            if (in_array($result[0]->word[$key], $sourceTags)) continue;
+                            $sourceTags[] = $result[0]->word[$key];
+                        }
+                    }
                 }
-                $contents['tags'] = $contents['tags'] ? $contents['tags'] . ',' . implode(',', $a) : implode(',', $a);
+                $contents['tags'] = implode(',', array_unique($sourceTags));
+                if (count($contents['tags']) < 3) {
+                    $ch = curl_init('https://api.bosonnlp.com/keywords/analysis?top_k=5');
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+                    curl_setopt($ch, CURLOPT_POSTFIELDS, $postString);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                    curl_setopt($ch, CURLOPT_HTTPHEADER,
+                        array(
+                            'Content-Type: application/json',
+                            'Accept: application/json',
+                            'X-Token: fpm1fDvA.5220.GimJs8QvViSK'
+                        )
+                    );
+                    $result = curl_exec($ch);
+                    curl_close($ch);
+                    $result = json_decode($result);
+                    $a = [];
+                    foreach ($result as $re) {
+                        $a[] = $re[1];
+                    }
+                    $contents['tags'] = $contents['tags'] ? $contents['tags'] . ',' . implode(',', $a) : implode(',', $a);
+                }
             }
         }
         return $contents;
@@ -1006,5 +1018,21 @@ class Util
     public static function subStr(string $text, int $length = 120, string $trim = '...'): string
     {
         return Common::fixHtml(Common::subStr($text, 0, $length, $trim));
+    }
+
+    /**
+     * 通过反射获取内部变量
+     *
+     * @param mixed $object
+     * @param string $name
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    public static function reflectGetValue($object, $name)
+    {
+        $reflect = new ReflectionClass($object);
+        $property = $reflect->getProperty($name);
+        $property->setAccessible(true);
+        return $property->getValue($object);
     }
 }

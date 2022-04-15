@@ -49,6 +49,7 @@ class Util
 
         // 内容替换处理
         Plugin::factory('Widget_Abstract_Contents')->contentEx = [__CLASS__, 'contentEx'];
+        Plugin::factory('Widget_Abstract_Contents')->excerpt = [__CLASS__, 'excerptEx'];
         Plugin::factory('Widget_Abstract_Contents')->excerptEx = [__CLASS__, 'excerptEx'];
 
         // 路由
@@ -559,13 +560,8 @@ class Util
                     return '';
                 }, $text);
             }
-            $pattern = Util::get_shortcode_regex(['hide']);
-            $text = preg_replace("/$pattern/", '', $text);
-            foreach (Util::$replacement as $tag => $replacement) {
-                if (false !== strpos($text, '[' . $tag)) {
-                    $pattern = self::get_shortcode_regex([$tag]);
-                    $text = preg_replace("/$pattern/", $replacement, $text);
-                }
+            if (strpos($text, '[hide') !== false) {
+                $text = preg_replace('/(?s)<pre[^<]*>.*?<\/pre>(*SKIP)(*F)|\[hide]([^\]]*?)\[\/hide]/', '', $text);
             }
         }
         return Util::parseEmoji($text);

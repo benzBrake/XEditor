@@ -99,7 +99,7 @@ class XEditor_Util
                             return '<div class="shortcode shortcode-hide hidden">此处内容已隐藏，<a href="#comments">回复后(需要填写邮箱)</a>可见</div>';
                         }
                     case 'post':
-                        $widget = Helper::widgetById('contents', $text);
+                        $widget = Helper::widgetById('contents', intval($text));
                         $abstract = XEditor_Util::subStr($widget->excerpt, 120);
                         $thumb = XEditor_Util::xThumbs($widget, 1, true);
                         $template = '<div class="shortcode shortcode-post"><div class="text-content"><div class="title"><a href="{permalink}">{title}</a></div><div class="content">' . $abstract . '</div></div><div class="media-content"><a href="{permalink}" title="{title}"><img alt="{title}" src="' . $thumb . '"/></a></div></div>';

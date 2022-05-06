@@ -52,9 +52,13 @@ class Action extends Widget implements ActionInterface
         $type = Util::xPlugin('XAutoSlugType', 'pinyin');
         if ($type !== 'none') {
             $result = call_user_func(array($this, $type), $word);
-            $result = preg_replace('/[[:punct:]]/', '', $result);
-            $result = str_replace(array('  ', ' '), '-', strtolower(trim($result)));
-            $message = array('result' => $result);
+            if (is_string($result)) {
+                $result = preg_replace('/[[:punct:]]/', '', $result);
+                $result = str_replace(array('  ', ' '), '-', strtolower(trim($result)));
+                $message = array('result' => $result);
+            } else {
+                $message = array('result' => '', 'error' => $result);
+            }
         } else {
             $message = array('result' => '', $type => $type);
         }

@@ -1,4 +1,4 @@
-class XEditor {
+class XEditorView {
     constructor() {
         this.init_editArea();
         this.init_advancedPanel();
@@ -45,13 +45,16 @@ class XEditor {
         this.editor.insertValue(val);
     }
 
-
     /**
      * 获取文本框内容
      * @returns {*}
      */
     getString() {
         return this.editor.getValue();
+    }
+
+    getText() {
+        return this.getString();
     }
 
     /**
@@ -526,4 +529,4 @@ class XEditor {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => new XEditor());
+window.XEditor = new XEditorView()

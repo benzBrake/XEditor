@@ -36,12 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
     class xBilibili extends HTMLElement {
         constructor() {
             super();
-            this.bvid = this.getAttribute('bvid');
+            this.bvid = (this.getAttribute('bvid') || "").trim().replaceAll('"', "");
             this.render();
         }
 
         render() {
-            if (this.bvid) this.innerHTML = `<iframe allowfullscreen="true" class="x-bilibili" src="//player.bilibili.com/player.html?bvid=${this.bvid}"></iframe>`;
+            if (this.bvid) this.innerHTML = `<iframe allowfullscreen="true" class="x-bilibili" src="//player.bilibili.com/player.html?bvid=${this.bvid}&autoplay=0"></iframe>`;
             else this.innerHTML = 'Bvid未填写！';
         }
     }

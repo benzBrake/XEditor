@@ -73,7 +73,7 @@ class XEditor_Util
                     if (array_key_exists($name, ShortCode::$ShortCodeReplacement)) {
                         $html = str_replace(array('{name}', '{attr}', '{text}', '{code}'), array($name, $attr, $text, $code), ShortCode::$ShortCodeReplacement[$name]);
                     } else {
-                        $html = `<div class="shortcode shortcode-${name}" $attr>${text}</div>`;
+                        $html = `<div class="shortcode shortcode-{$name}" $attr>{$text}</div>`;
                     }
                     return str_replace(array('{pluginUrl}'), array(Helper::options()->pluginUrl), $html);
                 });
@@ -136,7 +136,7 @@ class XEditor_Util
             <?php
         }
         if (self::xPlugin('XLoadFontAwesome', 'on') === 'on') {
-            echo '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">';
+            echo '<link rel="stylesheet" href="https://jsd.onmicrosoft.cn/npm/font-awesome@4.7.0/css/font-awesome.min.css">';
         }
     }
 
@@ -181,7 +181,7 @@ class XEditor_Util
         <link rel="stylesheet" href="<?php echo XEditor_Util::pluginUrl('/assets/css/font-awesome.min.css?v=4.7'); ?>">
         <link rel="stylesheet"
               href="<?php echo XEditor_Util::pluginUrl('/assets/css/x.theme.min.css?v=202104250955'); ?>">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor@3.8.4/dist/index.css"/>
+        <link rel="stylesheet" href="https://jsd.onmicrosoft.cn/npm/vditor@3.8.4/dist/index.css"/>
         <script>
             window.XConf = {
                 'options': {

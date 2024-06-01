@@ -50,21 +50,19 @@ class XEditor_Action extends XEditor_Helper_Action_Admin
                 $updateQuery = $db->update('table.options')->rows(array('value' => $pluginDataBackup))->where('name = ?', "plugin:${plugin}");
                 $db->query($updateQuery);
                 $notice->set(_t('检测到插件备份数据，恢复完成'), 'success');
-                $response->goBack();
             } else {
                 $notice->set(_t('没有插件备份数据，恢复不了哦！'), 'error');
-                $response->goBack();
             }
+            $response->goBack();
         } elseif ($operate === _t("删除备份")) {
             if ($pluginDataBackup) {
                 $deleteQuery = $db->delete('table.options')->where('name = ?', "plugin:${plugin}Backup");
                 $db->query($deleteQuery);
                 $notice->set(_t('删除成功！！！'), 'success');
-                $response->goBack();
             } else {
                 $notice->set(_t('不用删了！备份不存在！！！'), 'error');
-                $response->goBack();
             }
+            $response->goBack();
         }
     }
 

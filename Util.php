@@ -7,11 +7,12 @@ class XEditor_Util
      * @return string
      * @throws Typecho_Plugin_Exception
      */
-    public static function activate(): string
+    public static function activate()
     {
-        if (false == Typecho_Http_Client::get()) {
+        if (!self::isServerConfigured()) {
             throw new Typecho_Plugin_Exception(_t('对不起, 您的主机不支持 php-curl 扩展而且没有打开 allow_url_fopen 功能, 无法正常使用此功能'));
         }
+
         // 添加公共内容
         Typecho_Plugin::factory('Widget_Archive')->footer = array(__CLASS__, 'archiveFooter');
         // 添加文章编辑选项
@@ -31,6 +32,18 @@ class XEditor_Util
         // 路由
         Helper::addAction('editor', 'XEditor_Action');
         return _t("插件启用成功");
+    }
+
+    public static function isServerConfigured()
+    {
+        // 检查是否启用 php-curl 扩展
+        $curl_enabled = function_exists('curl_version');
+
+        // 检查是否启用了 allow_url_fopen
+        $allow_url_fopen = ini_get('allow_url_fopen') == '1';
+
+        // 如果任意一个条件为真，返回 true；否则返回 false
+        return $curl_enabled || $allow_url_fopen;
     }
 
     /**
@@ -335,8 +348,9 @@ class XEditor_Util
             if (!in_array($fields['thumb'], $thumbs)) {
                 $fieldThumbs = explode("\n", $fields['thumb']);
                 foreach ($fieldThumbs as $thumb) {
-                    if ($quantity > 0 && !empty(trim($thumb))) {
-                        $thumbs[] = $thumb;
+                    $t = trim($thumb);
+                    if ($quantity > 0 && !empty($t)) {
+                        $thumbs[] = $t;
                         $quantity -= 1;
                     }
                 }
@@ -345,7 +359,7 @@ class XEditor_Util
 
         // 然后是正文匹配
         preg_match_all("/<img(?<images>[^>]*?)>/i", $archive->content, $matches);
-        foreach ($matches['images'] as $index => $value) {
+        foreach ($matches['images'] as $value) {
             if ($quantity <= 0) {
                 break;
             }

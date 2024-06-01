@@ -32,7 +32,6 @@ class XEditor_Helper_Action_Admin extends Typecho_Widget implements Widget_Inter
         }
         /** 主题变量重载 */
         if (!empty($options['theme:' . $options['theme']])) {
-            $themeOptions = null;
 
             /** 解析变量 */
             if ($themeOptions = unserialize($options['theme:' . $options['theme']])) {

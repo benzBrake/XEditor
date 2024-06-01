@@ -125,11 +125,13 @@ class XEditor_Action extends XEditor_Helper_Action_Admin
      */
     public function baidu($word)
     {
-        if (empty(XEditor_Util::xPlugin('XAutoSlugBaiduAppId')) || empty(XEditor_Util::xPlugin('XAutoSlugBaiduKey'))) {
+        $appid = XEditor_Util::xPlugin('XAutoSlugBaiduAppId');
+        $key = XEditor_Util::xPlugin('XAutoSlugBaiduKey');
+        if (empty($key) || empty($appid)) {
             return '';
         }
-        $data = array('appid' => XEditor_Util::xPlugin('XAutoSlugBaiduAppId'), 'q' => $word, 'from' => 'zh', 'to' => 'en', 'salt' => rand(10000, 99999));
-        $data['sign'] = $this->buildSignForBaidu($word, XEditor_Util::xPlugin('XAutoSlugBaiduAppId'), $data['salt'], XEditor_Util::xPlugin('XAutoSlugBaiduKey'));
+        $data = array('appid' => $appid, 'q' => $word, 'from' => 'zh', 'to' => 'en', 'salt' => rand(10000, 99999));
+        $data['sign'] = $this->buildSignForBaidu($word, $appid, $data['salt'], $key);
         $data = http_build_query($data);
         $url = 'http://api.fanyi.baidu.com/api/trans/vip/translate' . '?' . $data;
         $result = $this->curl($url);

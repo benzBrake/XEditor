@@ -33,13 +33,16 @@ document.addEventListener("DOMContentLoaded",
         } else e[0].classList.add("active"),
             t.style.display = "block",
             s.style.display = "none";
-        var c = new XMLHttpRequest;
-        c.onreadystatechange = function () {
-            if (4 === c.readyState) if (200 <= c.status && 300 > c.status || 304 === c.status) {
-                var e = JSON.parse(c.responseText);
-                t.innerHTML = e.success ? '<p class="title">最新版本：' + e.title + "</p>" + e.content : "请求失败！"
-            } else t.innerHTML = "请求失败！"
-        },
-            c.open("get", "https://api.vvhan.com/api/qqsc?key=d8551631eeb7ecad47034a8b8c242c6c", !0),
-            c.send(null)
+
+        fetch('https://xiamp.net/archives/update-log-xeditor.html')
+            .then(response => response.text())
+            .then(text => {
+                let fragment = document.createElement('div');
+                fragment.innerHTML = text;
+                text = fragment.querySelector('.post-content,.entry-content')?.innerHTML;
+                let firstNode = fragment.querySelector('h2'),
+                    serverVersion = firstNode.innerText.substring(0, 5);
+
+                t.innerHTML = '<p class="title">最新版本：' + serverVersion + "</p>" + text;
+            })
     });
